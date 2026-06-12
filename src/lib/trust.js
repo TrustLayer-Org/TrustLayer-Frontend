@@ -42,3 +42,7 @@ export function scoreToColorClass(score) {
   }
   return "text-emerald-300 bg-emerald-500/10 border-emerald-500/30";
 }
+
+export function formatScore(score) {
+  return `${clampScore(score)}/100`;
+}
