@@ -24,3 +24,9 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Business Trust Lookup accents */
+::selection {
+  background: var(--foreground);
+  color: var(--background);
+}
