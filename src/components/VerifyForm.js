@@ -7,13 +7,21 @@ export default function VerifyForm() {
   const [businessId, setBusinessId] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
     setLoading(true);
-    const record = await lookupTrust(businessId);
-    setResult(record);
-    setLoading(false);
+    setError("");
+    setResult(null);
+    try {
+      const record = await lookupTrust(businessId);
+      setResult(record);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -42,6 +50,11 @@ export default function VerifyForm() {
       >
         {loading ? "Verifying…" : "Verify"}
       </button>
+      {error ? (
+        <p role="alert" className="text-sm text-red-400">
+          {error}
+        </p>
+      ) : null}
       {result ? (
         <p className="text-sm text-zinc-400">
           Loaded score for {result.businessId}.
