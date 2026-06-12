@@ -99,3 +99,7 @@ export function scoreToBarClass(score) {
 }
 
 export const PASSING_SCORE = 60;
+
+export function isPassingScore(score) {
+  return clampScore(score) >= PASSING_SCORE;
+}
