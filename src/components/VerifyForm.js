@@ -47,9 +47,13 @@ export default function VerifyForm() {
           type="text"
           value={businessId}
           onChange={handleChange}
+          aria-describedby="businessId-hint"
           placeholder="e.g. ACME-123"
           className="mt-1 w-full rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-600 focus:outline-none"
         />
+        <p id="businessId-hint" className="mt-1 text-xs text-zinc-500">
+          3-32 letters, numbers, or hyphens.
+        </p>
       </div>
       <button
         type="submit"
