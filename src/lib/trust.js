@@ -97,3 +97,5 @@ export function scoreToBarClass(score) {
   }
   return "bg-emerald-500";
 }
+
+export const PASSING_SCORE = 60;
