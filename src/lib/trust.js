@@ -156,3 +156,13 @@ export function scoreToTextClass(score) {
   }
   return "text-emerald-300";
 }
+
+export function nextTierGap(score) {
+  const n = clampScore(score);
+  for (const tier of TIER_THRESHOLDS) {
+    if (tier.min > n) {
+      return tier.min - n;
+    }
+  }
+  return 0;
+}
