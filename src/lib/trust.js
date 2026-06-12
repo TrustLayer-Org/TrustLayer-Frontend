@@ -46,3 +46,9 @@ export function scoreToColorClass(score) {
 export function formatScore(score) {
   return `${clampScore(score)}/100`;
 }
+
+export function normalizeBusinessId(input) {
+  return String(input ?? "")
+    .trim()
+    .toUpperCase();
+}
