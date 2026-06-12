@@ -1,6 +1,10 @@
 "use client";
 
+import { useState } from "react";
+
 export default function VerifyForm() {
+  const [businessId, setBusinessId] = useState("");
+
   return (
     <form className="space-y-4">
       <div>
@@ -14,6 +18,8 @@ export default function VerifyForm() {
           id="businessId"
           name="businessId"
           type="text"
+          value={businessId}
+          onChange={(event) => setBusinessId(event.target.value)}
           placeholder="e.g. ACME-123"
           className="mt-1 w-full rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-600 focus:outline-none"
         />
