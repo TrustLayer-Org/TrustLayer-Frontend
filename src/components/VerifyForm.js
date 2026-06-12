@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ScoreCard from "@/components/ScoreCard";
 import { lookupTrust } from "@/lib/lookup";
 
 export default function VerifyForm() {
@@ -56,9 +57,7 @@ export default function VerifyForm() {
         </p>
       ) : null}
       {result ? (
-        <p className="text-sm text-zinc-400">
-          Loaded score for {result.businessId}.
-        </p>
+        <ScoreCard businessId={result.businessId} score={result.score} />
       ) : null}
     </form>
   );
