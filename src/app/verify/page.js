@@ -1,5 +1,6 @@
 import Link from "next/link";
 import VerifyForm from "@/components/VerifyForm";
+import ScoreLegend from "@/components/ScoreLegend";
 export const metadata = {
   title: "Verify a business | TrustLayer",
   description: "Look up the on-chain trust score for a registered business.",
@@ -22,6 +23,12 @@ export default function VerifyPage() {
         </header>
         <section className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-6">
           <VerifyForm />
+        </section>
+        <section className="mt-6">
+          <p className="mb-2 text-xs uppercase tracking-wide text-zinc-500">
+            Score tiers
+          </p>
+          <ScoreLegend />
         </section>
       </main>
     </div>
