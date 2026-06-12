@@ -139,3 +139,20 @@ export function scoreGrade(score) {
   }
   return "F";
 }
+
+export function scoreToTextClass(score) {
+  const n = clampScore(score);
+  if (n < 20) {
+    return "text-red-300";
+  }
+  if (n < 40) {
+    return "text-orange-300";
+  }
+  if (n < 60) {
+    return "text-amber-300";
+  }
+  if (n < 80) {
+    return "text-lime-300";
+  }
+  return "text-emerald-300";
+}
