@@ -1,5 +1,10 @@
 import VerifyForm from "@/components/VerifyForm";
 
+export const metadata = {
+  title: "Verify a business | TrustLayer",
+  description: "Look up the on-chain trust score for a registered business.",
+};
+
 export default function VerifyPage() {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans">
