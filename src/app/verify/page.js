@@ -1,3 +1,5 @@
+import VerifyForm from "@/components/VerifyForm";
+
 export default function VerifyPage() {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans">
@@ -10,6 +12,9 @@ export default function VerifyPage() {
             Look up the on-chain trust score for any registered business.
           </p>
         </header>
+        <section className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-6">
+          <VerifyForm />
+        </section>
       </main>
     </div>
   );
