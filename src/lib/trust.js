@@ -122,3 +122,20 @@ export function tierIndex(score) {
 export function describeScore(score) {
   return `${scoreToLabel(score)} (${formatScore(score)})`;
 }
+
+export function scoreGrade(score) {
+  const n = clampScore(score);
+  if (n >= 80) {
+    return "A";
+  }
+  if (n >= 60) {
+    return "B";
+  }
+  if (n >= 40) {
+    return "C";
+  }
+  if (n >= 20) {
+    return "D";
+  }
+  return "F";
+}
