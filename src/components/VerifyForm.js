@@ -10,6 +10,13 @@ export default function VerifyForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  function handleChange(event) {
+    setBusinessId(event.target.value);
+    if (error) {
+      setError("");
+    }
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     setLoading(true);
@@ -39,7 +46,7 @@ export default function VerifyForm() {
           name="businessId"
           type="text"
           value={businessId}
-          onChange={(event) => setBusinessId(event.target.value)}
+          onChange={handleChange}
           placeholder="e.g. ACME-123"
           className="mt-1 w-full rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-600 focus:outline-none"
         />
