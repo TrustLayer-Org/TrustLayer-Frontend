@@ -166,3 +166,8 @@ export function nextTierGap(score) {
   }
   return 0;
 }
+
+export function tierLabelForIndex(index) {
+  const tier = TIER_THRESHOLDS[index];
+  return tier ? tier.label : "Unknown";
+}
