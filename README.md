@@ -43,6 +43,19 @@ npm run dev
 | `lint`   | Run ESLint on `src`   |
 | `test`   | Run lint (add unit tests as needed) |
 
+## Business Trust Lookup
+
+The `/verify` route lets you look up the trust score for a business by id.
+It is built from small, reusable pieces:
+
+- `src/lib/trust.js` – pure scoring helpers (labels, colors, tiers, grades)
+- `src/lib/lookup.js` – mock async lookup (swap for the backend score endpoint)
+- `src/components/TrustBadge.js` – colored trust-tier badge
+- `src/components/ScoreMeter.js` – score progress meter
+- `src/components/ScoreCard.js` – result card combining the above
+- `src/components/ScoreLegend.js` – tier reference legend
+- `src/components/VerifyForm.js` – client form driving the lookup
+
 ## Contributing
 
 1. Fork the repo and create a branch from `main`.
