@@ -10,7 +10,7 @@ const TIER_COPY = {
   Excellent: "Exceptional trust standing across all measured signals.",
 };
 
-export default function ScoreCard({ businessId, score }) {
+export default function ScoreCard({ businessId = "—", score = 0 }) {
   const label = scoreToLabel(score);
   return (
     <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-6">
