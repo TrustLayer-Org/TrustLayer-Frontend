@@ -80,3 +80,20 @@ export function tierForScore(score) {
 export function scoreToPercent(score) {
   return clampScore(score) / 100;
 }
+
+export function scoreToBarClass(score) {
+  const n = clampScore(score);
+  if (n < 20) {
+    return "bg-red-500";
+  }
+  if (n < 40) {
+    return "bg-orange-500";
+  }
+  if (n < 60) {
+    return "bg-amber-500";
+  }
+  if (n < 80) {
+    return "bg-lime-500";
+  }
+  return "bg-emerald-500";
+}
