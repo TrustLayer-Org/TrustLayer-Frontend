@@ -65,3 +65,14 @@ export function isValidBusinessId(id) {
   const normalized = normalizeBusinessId(id);
   return /^[A-Z0-9-]{3,32}$/.test(normalized);
 }
+
+export function tierForScore(score) {
+  const n = clampScore(score);
+  let tier = TIER_THRESHOLDS[0];
+  for (const candidate of TIER_THRESHOLDS) {
+    if (n >= candidate.min) {
+      tier = candidate;
+    }
+  }
+  return tier;
+}
