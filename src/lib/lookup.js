@@ -16,3 +16,12 @@ export function deriveMockScore(businessId) {
   }
   return clampScore(hash);
 }
+
+// Async mock lookup. Resolves to a { businessId, score } record.
+export async function lookupTrust(businessId) {
+  const normalized = normalizeBusinessId(businessId);
+  return {
+    businessId: normalized,
+    score: deriveMockScore(normalized),
+  };
+}
