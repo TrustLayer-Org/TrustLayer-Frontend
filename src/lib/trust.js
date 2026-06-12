@@ -52,3 +52,8 @@ export function normalizeBusinessId(input) {
     .trim()
     .toUpperCase();
 }
+
+export function isValidBusinessId(id) {
+  const normalized = normalizeBusinessId(id);
+  return /^[A-Z0-9-]{3,32}$/.test(normalized);
+}
