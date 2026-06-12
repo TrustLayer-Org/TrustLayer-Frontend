@@ -1,12 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import { lookupTrust } from "@/lib/lookup";
 
 export default function VerifyForm() {
   const [businessId, setBusinessId] = useState("");
+  const [result, setResult] = useState(null);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const record = await lookupTrust(businessId);
+    setResult(record);
+  }
 
   return (
-    <form className="space-y-4">
+    <form className="space-y-4" onSubmit={handleSubmit}>
       <div>
         <label
           htmlFor="businessId"
@@ -30,6 +38,11 @@ export default function VerifyForm() {
       >
         Verify
       </button>
+      {result ? (
+        <p className="text-sm text-zinc-400">
+          Loaded score for {result.businessId}.
+        </p>
+      ) : null}
     </form>
   );
 }
