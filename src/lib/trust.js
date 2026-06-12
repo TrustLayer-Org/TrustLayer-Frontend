@@ -103,3 +103,7 @@ export const PASSING_SCORE = 60;
 export function isPassingScore(score) {
   return clampScore(score) >= PASSING_SCORE;
 }
+
+export function isFailingScore(score) {
+  return clampScore(score) < PASSING_SCORE;
+}
