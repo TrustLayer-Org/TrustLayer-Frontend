@@ -9,6 +9,11 @@ export const TIER_THRESHOLDS = [
   { min: 80, label: "Excellent" },
 ];
 
+/**
+ * Coerce any input into an integer score within the 0-100 range.
+ * @param {number|string} score raw score value
+ * @returns {number} a clamped, rounded integer score
+ */
 export function clampScore(score) {
   const n = Number(score);
   if (Number.isNaN(n)) {
