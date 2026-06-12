@@ -1,6 +1,6 @@
 import {
   clampScore,
-  formatScore,
+  describeScore,
   scoreToColorClass,
   scoreToLabel,
 } from "@/lib/trust";
@@ -10,7 +10,7 @@ export default function TrustBadge({ score }) {
   return (
     <span
       role="status"
-      aria-label={`Trust tier ${label}, score ${formatScore(score)}`}
+      aria-label={`Trust tier ${describeScore(score)}`}
       className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium ${scoreToColorClass(
         score
       )}`}
