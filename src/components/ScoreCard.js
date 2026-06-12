@@ -1,4 +1,5 @@
 import TrustBadge from "@/components/TrustBadge";
+import { formatScore } from "@/lib/trust";
 
 export default function ScoreCard({ businessId, score }) {
   return (
@@ -11,6 +12,11 @@ export default function ScoreCard({ businessId, score }) {
           <p className="mt-1 font-mono text-sm text-zinc-200">{businessId}</p>
         </div>
         <TrustBadge score={score} />
+      </div>
+      <div className="mt-4">
+        <p className="text-3xl font-bold tracking-tight text-zinc-100">
+          {formatScore(score)}
+        </p>
       </div>
     </div>
   );
