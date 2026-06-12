@@ -118,3 +118,7 @@ export function tierIndex(score) {
   }
   return index;
 }
+
+export function describeScore(score) {
+  return `${scoreToLabel(score)} (${formatScore(score)})`;
+}
