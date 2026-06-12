@@ -107,3 +107,14 @@ export function isPassingScore(score) {
 export function isFailingScore(score) {
   return clampScore(score) < PASSING_SCORE;
 }
+
+export function tierIndex(score) {
+  const n = clampScore(score);
+  let index = 0;
+  for (let i = 0; i < TIER_THRESHOLDS.length; i += 1) {
+    if (n >= TIER_THRESHOLDS[i].min) {
+      index = i;
+    }
+  }
+  return index;
+}
