@@ -6,11 +6,14 @@ import { lookupTrust } from "@/lib/lookup";
 export default function VerifyForm() {
   const [businessId, setBusinessId] = useState("");
   const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setLoading(true);
     const record = await lookupTrust(businessId);
     setResult(record);
+    setLoading(false);
   }
 
   return (
@@ -34,9 +37,10 @@ export default function VerifyForm() {
       </div>
       <button
         type="submit"
-        className="rounded-md bg-zinc-100 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-white"
+        disabled={loading}
+        className="rounded-md bg-zinc-100 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
       >
-        Verify
+        {loading ? "Verifying…" : "Verify"}
       </button>
       {result ? (
         <p className="text-sm text-zinc-400">
