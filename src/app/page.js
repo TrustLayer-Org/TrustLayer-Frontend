@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans">
@@ -24,6 +26,12 @@ export default function Home() {
               partner.
             </p>
           </div>
+          <Link
+            href="/verify"
+            className="inline-flex items-center justify-center rounded-md bg-zinc-100 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-white"
+          >
+            Verify a business
+          </Link>
         </section>
       </main>
     </div>
