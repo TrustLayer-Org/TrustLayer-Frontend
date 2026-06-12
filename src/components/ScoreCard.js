@@ -1,4 +1,5 @@
 import TrustBadge from "@/components/TrustBadge";
+import ScoreMeter from "@/components/ScoreMeter";
 import { formatScore, scoreToLabel } from "@/lib/trust";
 
 const TIER_COPY = {
@@ -26,6 +27,9 @@ export default function ScoreCard({ businessId, score }) {
         <p className="text-3xl font-bold tracking-tight text-zinc-100">
           {formatScore(score)}
         </p>
+        <div className="mt-3">
+          <ScoreMeter score={score} />
+        </div>
         <p className="mt-2 text-sm text-zinc-400">{TIER_COPY[label]}</p>
       </div>
     </div>
