@@ -1,6 +1,14 @@
 // Pure helper functions for working with business trust scores.
 // Scores are integers in the range 0-100.
 
+export const TIER_THRESHOLDS = [
+  { min: 0, label: "Untrusted" },
+  { min: 20, label: "Low" },
+  { min: 40, label: "Moderate" },
+  { min: 60, label: "High" },
+  { min: 80, label: "Excellent" },
+];
+
 export function clampScore(score) {
   const n = Number(score);
   if (Number.isNaN(n)) {
