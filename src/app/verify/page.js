@@ -1,5 +1,5 @@
+import Link from "next/link";
 import VerifyForm from "@/components/VerifyForm";
-
 export const metadata = {
   title: "Verify a business | TrustLayer",
   description: "Look up the on-chain trust score for a registered business.",
@@ -10,7 +10,10 @@ export default function VerifyPage() {
     <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans">
       <main className="max-w-4xl mx-auto px-6 py-16">
         <header className="mb-12">
-          <h1 className="text-3xl font-bold tracking-tight">
+          <Link href="/" className="text-sm text-zinc-500 hover:text-zinc-300">
+            Back to home
+          </Link>
+          <h1 className="mt-4 text-3xl font-bold tracking-tight">
             Verify a business
           </h1>
           <p className="text-zinc-400 mt-2">
