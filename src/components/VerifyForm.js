@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ScoreCard from "@/components/ScoreCard";
+import RecentLookups from "@/components/RecentLookups";
 import { lookupTrust } from "@/lib/lookup";
 import { addLookup, clearHistory, loadHistory, saveHistory } from "@/lib/history";
 
@@ -86,6 +87,7 @@ export default function VerifyForm() {
       {result ? (
         <ScoreCard businessId={result.businessId} score={result.score} />
       ) : null}
+      <RecentLookups history={history} onClear={handleClearHistory} />
     </form>
   );
 }
