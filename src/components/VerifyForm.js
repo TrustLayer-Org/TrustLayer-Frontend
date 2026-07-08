@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import ScoreCard from "@/components/ScoreCard";
 import { lookupTrust } from "@/lib/lookup";
-import { loadHistory } from "@/lib/history";
+import { addLookup, loadHistory, saveHistory } from "@/lib/history";
 
 export default function VerifyForm() {
   const [businessId, setBusinessId] = useState("");
@@ -31,6 +31,11 @@ export default function VerifyForm() {
     try {
       const record = await lookupTrust(businessId);
       setResult(record);
+      setHistory((prev) => {
+        const next = addLookup(prev, record);
+        saveHistory(next);
+        return next;
+      });
     } catch (err) {
       setError(err.message);
     } finally {
