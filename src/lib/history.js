@@ -19,3 +19,12 @@ export function addLookup(history, record) {
   );
   return [record, ...deduped].slice(0, MAX_HISTORY);
 }
+
+/**
+ * Read the stored lookup history from localStorage.
+ * @returns {Array<{businessId: string, score: number}>} the stored history, or [] when absent
+ */
+export function loadHistory() {
+  const raw = window.localStorage.getItem(HISTORY_STORAGE_KEY);
+  return raw ? JSON.parse(raw) : [];
+}
