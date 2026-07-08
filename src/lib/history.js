@@ -14,5 +14,8 @@ export const MAX_HISTORY = 5;
  * @returns {Array<{businessId: string, score: number}>} the updated history
  */
 export function addLookup(history, record) {
-  return [record, ...history].slice(0, MAX_HISTORY);
+  const deduped = history.filter(
+    (entry) => entry.businessId !== record.businessId
+  );
+  return [record, ...deduped].slice(0, MAX_HISTORY);
 }
