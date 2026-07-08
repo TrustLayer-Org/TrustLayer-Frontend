@@ -28,3 +28,11 @@ export function loadHistory() {
   const raw = window.localStorage.getItem(HISTORY_STORAGE_KEY);
   return raw ? JSON.parse(raw) : [];
 }
+
+/**
+ * Persist the lookup history to localStorage.
+ * @param {Array<{businessId: string, score: number}>} history the history to store
+ */
+export function saveHistory(history) {
+  window.localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
+}
