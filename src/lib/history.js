@@ -36,3 +36,8 @@ export function loadHistory() {
 export function saveHistory(history) {
   window.localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
 }
+
+// Remove the stored lookup history from localStorage.
+export function clearHistory() {
+  window.localStorage.removeItem(HISTORY_STORAGE_KEY);
+}
