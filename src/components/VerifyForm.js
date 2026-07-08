@@ -1,14 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ScoreCard from "@/components/ScoreCard";
 import { lookupTrust } from "@/lib/lookup";
+import { loadHistory } from "@/lib/history";
 
 export default function VerifyForm() {
   const [businessId, setBusinessId] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [history, setHistory] = useState([]);
+
+  useEffect(() => {
+    setHistory(loadHistory());
+  }, []);
 
   function handleChange(event) {
     setBusinessId(event.target.value);
