@@ -11,6 +11,7 @@ export default function RecentLookups({ history, onClear }) {
           <button
             type="button"
             onClick={onClear}
+            aria-label="Clear recent lookups"
             className="text-xs text-zinc-500 hover:text-zinc-300"
           >
             Clear
