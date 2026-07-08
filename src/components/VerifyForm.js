@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import ScoreCard from "@/components/ScoreCard";
 import { lookupTrust } from "@/lib/lookup";
-import { addLookup, loadHistory, saveHistory } from "@/lib/history";
+import { addLookup, clearHistory, loadHistory, saveHistory } from "@/lib/history";
 
 export default function VerifyForm() {
   const [businessId, setBusinessId] = useState("");
@@ -15,6 +15,11 @@ export default function VerifyForm() {
   useEffect(() => {
     setHistory(loadHistory());
   }, []);
+
+  function handleClearHistory() {
+    clearHistory();
+    setHistory([]);
+  }
 
   function handleChange(event) {
     setBusinessId(event.target.value);
