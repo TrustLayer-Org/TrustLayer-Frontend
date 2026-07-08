@@ -1,26 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ScoreCard from "@/components/ScoreCard";
 import RecentLookups from "@/components/RecentLookups";
 import { lookupTrust } from "@/lib/lookup";
-import { addLookup, clearHistory, loadHistory, saveHistory } from "@/lib/history";
+import { useLookupHistory } from "@/lib/useLookupHistory";
 
 export default function VerifyForm() {
   const [businessId, setBusinessId] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [history, setHistory] = useState([]);
-
-  useEffect(() => {
-    setHistory(loadHistory());
-  }, []);
-
-  function handleClearHistory() {
-    clearHistory();
-    setHistory([]);
-  }
+  const { history, recordLookup, clear: handleClearHistory } =
+    useLookupHistory();
 
   function handleChange(event) {
     setBusinessId(event.target.value);
@@ -36,11 +28,7 @@ export default function VerifyForm() {
     try {
       const record = await lookupTrust(id);
       setResult(record);
-      setHistory((prev) => {
-        const next = addLookup(prev, record);
-        saveHistory(next);
-        return next;
-      });
+      recordLookup(record);
     } catch (err) {
       setError(err.message);
     } finally {
