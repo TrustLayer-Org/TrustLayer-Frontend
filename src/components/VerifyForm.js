@@ -29,13 +29,12 @@ export default function VerifyForm() {
     }
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function runLookup(id) {
     setLoading(true);
     setError("");
     setResult(null);
     try {
-      const record = await lookupTrust(businessId);
+      const record = await lookupTrust(id);
       setResult(record);
       setHistory((prev) => {
         const next = addLookup(prev, record);
@@ -47,6 +46,16 @@ export default function VerifyForm() {
     } finally {
       setLoading(false);
     }
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    await runLookup(businessId);
+  }
+
+  function handleSelectHistory(id) {
+    setBusinessId(id);
+    runLookup(id);
   }
 
   return (
@@ -87,7 +96,11 @@ export default function VerifyForm() {
       {result ? (
         <ScoreCard businessId={result.businessId} score={result.score} />
       ) : null}
-      <RecentLookups history={history} onClear={handleClearHistory} />
+      <RecentLookups
+        history={history}
+        onClear={handleClearHistory}
+        onSelect={handleSelectHistory}
+      />
     </form>
   );
 }

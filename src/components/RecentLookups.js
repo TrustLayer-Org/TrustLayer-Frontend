@@ -1,6 +1,6 @@
 import TrustBadge from "@/components/TrustBadge";
 
-export default function RecentLookups({ history, onClear }) {
+export default function RecentLookups({ history, onClear, onSelect }) {
   return (
     <div className="rounded-lg border border-zinc-800 bg-zinc-900/50 p-6">
       <div className="flex items-center justify-between">
@@ -25,14 +25,17 @@ export default function RecentLookups({ history, onClear }) {
       ) : (
         <ul className="mt-3 space-y-2">
           {history.map((entry) => (
-            <li
-              key={entry.businessId}
-              className="flex items-center justify-between gap-3"
-            >
-              <span className="font-mono text-sm text-zinc-300">
-                {entry.businessId}
-              </span>
-              <TrustBadge score={entry.score} />
+            <li key={entry.businessId}>
+              <button
+                type="button"
+                onClick={() => onSelect(entry.businessId)}
+                className="flex w-full items-center justify-between gap-3 rounded-md py-1 text-left hover:text-zinc-100"
+              >
+                <span className="font-mono text-sm text-zinc-300">
+                  {entry.businessId}
+                </span>
+                <TrustBadge score={entry.score} />
+              </button>
             </li>
           ))}
         </ul>
