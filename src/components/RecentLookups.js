@@ -23,13 +23,13 @@ export default function RecentLookups({ history, onClear, onSelect }) {
           Businesses you look up will show up here.
         </p>
       ) : (
-        <ul className="mt-3 space-y-2">
+        <ul className="mt-3 divide-y divide-zinc-800">
           {history.map((entry) => (
             <li key={entry.businessId}>
               <button
                 type="button"
                 onClick={() => onSelect(entry.businessId)}
-                className="flex w-full items-center justify-between gap-3 rounded-md py-1 text-left hover:text-zinc-100"
+                className="flex w-full items-center justify-between gap-3 py-2 text-left hover:text-zinc-100"
               >
                 <span className="font-mono text-sm text-zinc-300">
                   {entry.businessId}
