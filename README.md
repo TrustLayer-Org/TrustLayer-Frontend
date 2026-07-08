@@ -57,6 +57,15 @@ It is built from small, reusable pieces:
 - `src/components/ScoreLegend.js` – tier reference legend
 - `src/components/VerifyForm.js` – client form driving the lookup
 
+## Recent Lookups
+
+The `/verify` form keeps a small localStorage-backed history of past lookups,
+capped at the 5 most recent, deduped by business id:
+
+- `src/lib/history.js` – pure helpers for reading, writing, and updating the stored history
+- `src/lib/useLookupHistory.js` – hook wiring the helpers into component state
+- `src/components/RecentLookups.js` – renders the history list; entries are clickable to re-run a lookup
+
 ## Contributing
 
 1. Fork the repo and create a branch from `main`.
