@@ -176,3 +176,13 @@ export function tierLabelForIndex(index) {
   const tier = TIER_THRESHOLDS[index];
   return tier ? tier.label : "Unknown";
 }
+
+export function nextTierLabel(score) {
+  const n = clampScore(score);
+  for (const tier of TIER_THRESHOLDS) {
+    if (tier.min > n) {
+      return tier.label;
+    }
+  }
+  return null;
+}
