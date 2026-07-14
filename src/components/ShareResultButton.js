@@ -27,6 +27,7 @@ export default function ShareResultButton({ businessId, score }) {
     const summary = buildShareSummary(businessId, score);
     await copyToClipboard(summary);
     setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   }
 
   return (
