@@ -67,6 +67,15 @@ capped at the 5 most recent, deduped by business id:
 - `src/lib/useLookupHistory.js` – hook wiring the helpers into component state
 - `src/components/RecentLookups.js` – renders the history list; entries are clickable to re-run a lookup
 
+## Next Tier Hint & Result Sharing
+
+The result card on `/verify` also shows how far a score is from the next
+trust tier, and offers a way to copy the result:
+
+- `src/lib/trust.js` – `nextTierLabel` / `isTopTier` for tier progress, `buildShareSummary` for a copyable summary
+- `src/components/NextTierHint.js` – shows points remaining to the next tier, or a top-tier message
+- `src/components/ShareResultButton.js` – copies the result summary to the clipboard, with a confirmation and a fallback for older browsers
+
 ## Contributing
 
 1. Fork the repo and create a branch from `main`.
