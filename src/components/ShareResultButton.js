@@ -34,7 +34,7 @@ export default function ShareResultButton({ businessId, score }) {
     <button
       type="button"
       onClick={handleClick}
-      className="text-xs text-zinc-500 hover:text-zinc-300"
+      className="rounded-md border border-zinc-800 px-2.5 py-1 text-xs text-zinc-400 hover:border-zinc-700 hover:text-zinc-200"
     >
       {copied ? "Copied" : "Share"}
       <span role="status" aria-live="polite" className="sr-only">
