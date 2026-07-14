@@ -8,6 +8,7 @@ Next.js dashboard for TrustLayer: decentralized business trust scoring on Stella
 - **Starter page** – TrustLayer-themed home with placeholder sections
 - **Business Trust Lookup** – `/verify` page to look up a business trust score
 - **Recent Lookups** – localStorage-backed history of past lookups on `/verify`
+- **Next Tier Hint & Result Sharing** – progress guidance and a copy-to-clipboard share button on the result card
 - **CI** – Lint and build on push/PR to `main`
 
 ## Prerequisites
