@@ -1,5 +1,6 @@
 import TrustBadge from "@/components/TrustBadge";
 import ScoreMeter from "@/components/ScoreMeter";
+import NextTierHint from "@/components/NextTierHint";
 import { formatScore, scoreToLabel } from "@/lib/trust";
 
 const TIER_COPY = {
@@ -31,6 +32,7 @@ export default function ScoreCard({ businessId = "—", score = 0 }) {
           <ScoreMeter score={score} />
         </div>
         <p className="mt-2 text-sm text-zinc-400">{TIER_COPY[label]}</p>
+        <NextTierHint score={score} />
       </div>
     </div>
   );
