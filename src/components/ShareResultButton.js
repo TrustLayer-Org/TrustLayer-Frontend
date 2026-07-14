@@ -37,6 +37,9 @@ export default function ShareResultButton({ businessId, score }) {
       className="text-xs text-zinc-500 hover:text-zinc-300"
     >
       {copied ? "Copied" : "Share"}
+      <span role="status" aria-live="polite" className="sr-only">
+        {copied ? "Result copied to clipboard" : ""}
+      </span>
     </button>
   );
 }
