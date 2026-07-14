@@ -190,3 +190,7 @@ export function nextTierLabel(score) {
 export function isTopTier(score) {
   return nextTierLabel(score) === null;
 }
+
+export function buildShareSummary(businessId, score) {
+  return `${businessId}: ${describeScore(score)} — TrustLayer`;
+}
