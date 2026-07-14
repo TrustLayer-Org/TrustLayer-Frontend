@@ -33,7 +33,7 @@ export default function ScoreCard({ businessId = "—", score = 0 }) {
           <ScoreMeter score={score} />
         </div>
         <p className="mt-2 text-sm text-zinc-400">{TIER_COPY[label]}</p>
-        <div className="mt-3 flex items-center justify-between gap-3">
+        <div className="mt-4 flex items-center justify-between gap-3 border-t border-zinc-800 pt-3">
           <NextTierHint score={score} />
           <ShareResultButton businessId={businessId} score={score} />
         </div>
