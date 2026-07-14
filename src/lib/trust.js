@@ -186,3 +186,7 @@ export function nextTierLabel(score) {
   }
   return null;
 }
+
+export function isTopTier(score) {
+  return nextTierLabel(score) === null;
+}
