@@ -1,6 +1,9 @@
 import { isTopTier, nextTierGap, nextTierLabel } from "@/lib/trust";
 
 export default function NextTierHint({ score }) {
+  if (score === undefined || score === null) {
+    return null;
+  }
   if (isTopTier(score)) {
     return (
       <p className="text-xs text-zinc-500">
