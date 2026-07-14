@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { buildShareSummary } from "@/lib/trust";
 
 // Copy text to the clipboard, falling back to a hidden textarea when the
@@ -20,9 +21,12 @@ async function copyToClipboard(text) {
 }
 
 export default function ShareResultButton({ businessId, score }) {
+  const [copied, setCopied] = useState(false);
+
   async function handleClick() {
     const summary = buildShareSummary(businessId, score);
     await copyToClipboard(summary);
+    setCopied(true);
   }
 
   return (
@@ -31,7 +35,7 @@ export default function ShareResultButton({ businessId, score }) {
       onClick={handleClick}
       className="text-xs text-zinc-500 hover:text-zinc-300"
     >
-      Share
+      {copied ? "Copied" : "Share"}
     </button>
   );
 }
