@@ -2,14 +2,15 @@
 
 Next.js dashboard for TrustLayer: decentralized business trust scoring on Stellar. Starter UI with Tailwind; ready for Stellar wallet integration.
 
-## What’s in this repo
+## What's in this repo
 
 - **Next.js 16** – App Router, Tailwind CSS, ESLint
 - **Starter page** – TrustLayer-themed home with placeholder sections
 - **Business Trust Lookup** – `/verify` page to look up a business trust score
 - **Recent Lookups** – localStorage-backed history of past lookups on `/verify`
 - **Next Tier Hint & Result Sharing** – progress guidance and a copy-to-clipboard share button on the result card
-- **CI** – Lint and build on push/PR to `main`
+- **Backend Configuration Safety** – validated environment config, URL injection prevention, environment diagnostics
+- **CI** – Lint, tests, and build on push/PR to `main`
 
 ## Prerequisites
 
@@ -25,8 +26,15 @@ cd trustlayer-frontend
 # Install dependencies
 npm ci
 
+# Configure environment (required)
+cp .env.example .env.local
+# Edit .env.local with your backend URL and environment
+
 # Lint
 npm run lint
+
+# Test
+npm test
 
 # Build
 npm run build
@@ -35,15 +43,34 @@ npm run build
 npm run dev
 ```
 
+## Environment Configuration
+
+The app requires two environment variables:
+
+| Variable                  | Description                              | Example                        |
+|---------------------------|------------------------------------------|--------------------------------|
+| `NEXT_PUBLIC_BACKEND_URL` | Backend API base URL (http or https)     | `https://api.trustlayer.io`    |
+| `NEXT_PUBLIC_APP_ENV`     | Environment: `development`, `test`, or `production` | `production`       |
+
+**Safety checks:**
+- Missing or malformed values fail the build with an actionable error message.
+- Production environments must not use localhost, 127.0.0.1, .test, .local, or other dev-looking URLs.
+- URLs with embedded credentials, hash fragments, or injection characters are rejected.
+- Non-production environments using production-looking URLs trigger a warning.
+
+See `.env.example` for all configuration options.
+
 ## Scripts
 
-| Script   | Description           |
-|----------|-----------------------|
-| `dev`    | Start dev server      |
-| `build`  | Production build      |
-| `start`  | Start production server |
-| `lint`   | Run ESLint on `src`   |
-| `test`   | Run lint (add unit tests as needed) |
+| Script        | Description                                      |
+|---------------|--------------------------------------------------|
+| `dev`         | Start dev server                                 |
+| `build`       | Production build (validates config)              |
+| `start`       | Start production server                          |
+| `lint`        | Run ESLint on `src`                              |
+| `test`        | Run lint and config tests                        |
+| `test:config` | Run config validation tests only                 |
+| `smoke`       | Smoke test a production build                    |
 
 ## Business Trust Lookup
 
@@ -51,7 +78,8 @@ The `/verify` route lets you look up the trust score for a business by id.
 It is built from small, reusable pieces:
 
 - `src/lib/trust.js` – pure scoring helpers (labels, colors, tiers, grades)
-- `src/lib/lookup.js` – mock async lookup (swap for the backend score endpoint)
+- `src/lib/lookup.js` – backend-aware lookup with mock fallback for development
+- `src/lib/config.js` – environment configuration validation and safe URL construction
 - `src/components/TrustBadge.js` – colored trust-tier badge
 - `src/components/ScoreMeter.js` – score progress meter
 - `src/components/ScoreCard.js` – result card combining the above
@@ -80,7 +108,7 @@ trust tier, and offers a way to copy the result:
 
 1. Fork the repo and create a branch from `main`.
 2. Run `npm run lint` and `npm run build` before pushing.
-3. Open a pull request to `main`. CI will run lint and build.
+3. Open a pull request to `main`. CI will run lint, tests, and build.
 
 ## License
 
