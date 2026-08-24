@@ -2,12 +2,15 @@
   "name": "trustlayer-frontend",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint src",
-    "test": "npm run lint"
+    "test": "npm run lint && node --test src/__tests__/",
+    "test:config": "node --test src/__tests__/config.test.js",
+    "smoke": "node scripts/smoke.mjs"
   },
   "dependencies": {
     "next": "16.1.6",
