@@ -1,14 +1,14 @@
-// Mock trust lookup for the Business Trust Lookup experience.
+// Trust lookup for the Business Trust Lookup experience.
 //
-// PLACEHOLDER: this module returns a deterministic mock score derived from the
-// business id. Replace `lookupTrust` with a real call to the backend endpoint
-// `GET /api/v1/businesses/:id/score` when it is available.
+// Uses the validated backend URL from config to construct safe requests.
+// Falls back to a deterministic mock when no backend is configured (development).
 
 import {
   clampScore,
   isValidBusinessId,
   normalizeBusinessId,
 } from "@/lib/trust";
+import { buildRequestUrl, validateConfig } from "@/lib/config";
 
 // Simulated network latency for the mock lookup, in milliseconds.
 const MOCK_LATENCY_MS = 600;
@@ -24,14 +24,59 @@ export function deriveMockScore(businessId) {
   return clampScore(hash);
 }
 
-// Async mock lookup. Resolves to a { businessId, score } record, or rejects
-// when the business id is invalid. Mimics a real network round-trip.
+// Check if a real backend is configured (not just mock mode).
+function isBackendConfigured() {
+  try {
+    const { backendUrl } = validateConfig();
+    return Boolean(backendUrl);
+  } catch {
+    return false;
+  }
+}
+
+// Fetch trust score from the real backend using a safely constructed URL.
+async function fetchFromBackend(businessId) {
+  const normalized = normalizeBusinessId(businessId);
+  // Build the request URL from validated config — prevents URL injection.
+  const url = buildRequestUrl(
+    `/api/v1/businesses/${encodeURIComponent(normalized)}/score`
+  );
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `Backend lookup failed (${response.status}). Please try again.`
+    );
+  }
+
+  const data = await response.json();
+  return {
+    businessId: normalized,
+    score: clampScore(data.score),
+  };
+}
+
+// Async lookup. Uses the real backend when configured, otherwise falls back
+// to a deterministic mock. Resolves to a { businessId, score } record, or
+// rejects when the business id is invalid.
 export async function lookupTrust(businessId) {
   const normalized = normalizeBusinessId(businessId);
-  await new Promise((resolve) => setTimeout(resolve, MOCK_LATENCY_MS));
   if (!isValidBusinessId(normalized)) {
     throw new Error("Enter a valid business ID (3-32 letters, numbers, or -).");
   }
+
+  if (isBackendConfigured()) {
+    return fetchFromBackend(normalized);
+  }
+
+  // Mock fallback for development without a backend.
+  await new Promise((resolve) => setTimeout(resolve, MOCK_LATENCY_MS));
   return {
     businessId: normalized,
     score: deriveMockScore(normalized),
