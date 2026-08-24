@@ -35,5 +35,7 @@ export async function lookupTrust(businessId) {
   return {
     businessId: normalized,
     score: deriveMockScore(normalized),
+    provenance: "mock:v1",
+    lookedUpAt: new Date().toISOString(),
   };
 }
