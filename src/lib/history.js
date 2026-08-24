@@ -1,43 +1,54 @@
 // Recent lookup history for the Business Trust Lookup experience, persisted
 // to localStorage so it survives a page reload.
 
-// Key under which the recent lookup history is stored in localStorage.
 export const HISTORY_STORAGE_KEY = "trustlayer:recent-lookups";
-
-// Maximum number of recent lookups to keep.
 export const MAX_HISTORY = 5;
 
+export function isVerifiedLookup(record) {
+  return (
+    record &&
+    record.state === "verified" &&
+    record.verificationStatus === "verified" &&
+    typeof record.source === "string" &&
+    record.source.trim() !== "" &&
+    typeof record.calculationVersion === "string" &&
+    record.calculationVersion.trim() !== ""
+  );
+}
+
 /**
- * Prepend a lookup record to history, capped at MAX_HISTORY entries.
- * @param {Array<{businessId: string, score: number}>} history existing history
- * @param {{businessId: string, score: number}} record the new lookup result
- * @returns {Array<{businessId: string, score: number}>} the updated history
+ * Prepend a verified lookup record to history, capped at MAX_HISTORY entries.
  */
 export function addLookup(history, record) {
+  if (!isVerifiedLookup(record)) {
+    return history.filter(isVerifiedLookup).slice(0, MAX_HISTORY);
+  }
   const deduped = history.filter(
-    (entry) => entry.businessId !== record.businessId
+    (entry) => entry.businessId !== record.businessId && isVerifiedLookup(entry)
   );
   return [record, ...deduped].slice(0, MAX_HISTORY);
 }
 
 /**
- * Read the stored lookup history from localStorage.
- * @returns {Array<{businessId: string, score: number}>} the stored history, or [] when absent
+ * Read verified records from localStorage. Older mock-only records are ignored.
  */
 export function loadHistory() {
-  const raw = window.localStorage.getItem(HISTORY_STORAGE_KEY);
-  return raw ? JSON.parse(raw) : [];
+  try {
+    const raw = window.localStorage.getItem(HISTORY_STORAGE_KEY);
+    const records = raw ? JSON.parse(raw) : [];
+    return Array.isArray(records) ? records.filter(isVerifiedLookup) : [];
+  } catch {
+    return [];
+  }
 }
 
-/**
- * Persist the lookup history to localStorage.
- * @param {Array<{businessId: string, score: number}>} history the history to store
- */
 export function saveHistory(history) {
-  window.localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
+  window.localStorage.setItem(
+    HISTORY_STORAGE_KEY,
+    JSON.stringify(history.filter(isVerifiedLookup).slice(0, MAX_HISTORY))
+  );
 }
 
-// Remove the stored lookup history from localStorage.
 export function clearHistory() {
   window.localStorage.removeItem(HISTORY_STORAGE_KEY);
 }
