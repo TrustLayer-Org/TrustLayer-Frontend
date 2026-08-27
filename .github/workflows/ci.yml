@@ -25,5 +25,8 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Browser storage tests
+        run: npm run test:storage
+
       - name: Build
         run: npm run build
