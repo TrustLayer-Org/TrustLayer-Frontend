@@ -1,38 +1,71 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ScoreCard from "@/components/ScoreCard";
 import RecentLookups from "@/components/RecentLookups";
 import { lookupTrust } from "@/lib/lookup";
+import { normalizeBusinessId } from "@/lib/trust";
 import { useLookupHistory } from "@/lib/useLookupHistory";
 
 export default function VerifyForm() {
   const [businessId, setBusinessId] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const requestId = useRef(0);
+  const activeController = useRef(null);
   const { history, recordLookup, clear: handleClearHistory } =
     useLookupHistory();
 
+  useEffect(() => {
+    return () => {
+      requestId.current += 1;
+      activeController.current?.abort();
+    };
+  }, []);
+
   function handleChange(event) {
+    requestId.current += 1;
+    activeController.current?.abort();
+    activeController.current = null;
     setBusinessId(event.target.value);
-    if (error) {
-      setError("");
-    }
+    setResult(null);
+    setLoading(false);
   }
 
   async function runLookup(id) {
+    const currentRequestId = requestId.current + 1;
+    requestId.current = currentRequestId;
+    activeController.current?.abort();
+    const controller = new AbortController();
+    activeController.current = controller;
+    const normalized = normalizeBusinessId(id);
     setLoading(true);
-    setError("");
     setResult(null);
+
     try {
-      const record = await lookupTrust(id);
+      const record = await lookupTrust(normalized, { signal: controller.signal });
+      if (requestId.current !== currentRequestId) {
+        return;
+      }
       setResult(record);
-      recordLookup(record);
+      if (record.state === "verified") {
+        recordLookup(record);
+      }
     } catch (err) {
-      setError(err.message);
+      if (requestId.current !== currentRequestId || err?.name === "AbortError") {
+        return;
+      }
+      setResult({
+        businessId: normalized,
+        state: err.state || "error",
+        message: err.message || "The verification service could not be reached. Please retry.",
+        retryable: Boolean(err.retryable),
+      });
     } finally {
-      setLoading(false);
+      if (requestId.current === currentRequestId) {
+        setLoading(false);
+        activeController.current = null;
+      }
     }
   }
 
@@ -76,13 +109,8 @@ export default function VerifyForm() {
       >
         {loading ? "Verifying…" : "Verify"}
       </button>
-      {error ? (
-        <p role="alert" className="text-sm text-red-400">
-          {error}
-        </p>
-      ) : null}
       {result ? (
-        <ScoreCard businessId={result.businessId} score={result.score} />
+        <ScoreCard result={result} onRetry={() => runLookup(businessId)} />
       ) : null}
       <RecentLookups
         history={history}
