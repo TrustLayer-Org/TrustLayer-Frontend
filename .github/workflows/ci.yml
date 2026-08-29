@@ -9,6 +9,9 @@ on:
 jobs:
   build-test:
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_BACKEND_URL: "https://api.trustlayer.io"
+      NEXT_PUBLIC_APP_ENV: "test"
     steps:
       - uses: actions/checkout@v4
 
@@ -27,6 +30,9 @@ jobs:
 
       - name: Browser storage tests
         run: npm run test:storage
+
+      - name: Test
+        run: npm test
 
       - name: Build
         run: npm run build

@@ -95,6 +95,13 @@ export async function lookupTrust(businessId, { signal } = {}) {
     clearTimeout(timeout);
     signal?.removeEventListener("abort", abortHandler);
   }
+
+  if (isBackendConfigured()) {
+    return fetchFromBackend(normalized);
+  }
+
+  // Mock fallback for development without a backend.
+  await new Promise((resolve) => setTimeout(resolve, MOCK_LATENCY_MS));
   return {
     businessId: normalized,
     score: deriveMockScore(normalized),
