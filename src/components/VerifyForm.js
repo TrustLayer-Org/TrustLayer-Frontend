@@ -74,6 +74,10 @@ export default function VerifyForm() {
     await runLookup(businessId);
   }
 
+  function handleRetry() {
+    runLookup(lastAttemptedId.current || businessId);
+  }
+
   function handleSelectHistory(id) {
     setBusinessId(id);
     runLookup(id);
